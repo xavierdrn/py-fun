@@ -21,6 +21,13 @@ class Collection(Generic[T]):
         for arg in args:
             self.add(arg)
 
+    def _norm(self, item):
+        """Normalise an item the same way add() stores it."""
+        item = item if not isinstance(item, set | dict) else frozenset(item)
+        if isinstance(self._items, set) and isinstance(item, list):
+            item = tuple(item)
+        return item
+
     def add(self, item: T) -> Self:
         """
         Add an element of type T to the collection.
@@ -49,7 +56,10 @@ class Collection(Generic[T]):
         Returns:
             True if element is in the collection, False otherwise.
         """
-        return False
+        try:
+            return self._norm(item) in self._items
+        except TypeError:   # unhashable item cannot be in a set
+            return False
 
     def size(self) -> int:
         """
@@ -58,7 +68,7 @@ class Collection(Generic[T]):
         Returns:
             the number of items in the collection.
         """
-        return 0
+        return len(self._items)
 
     @classmethod
     def zip(cls, l1: 'Collection[list]', l2: 'Collection[list]') -> 'Collection[tuple]':
@@ -72,7 +82,10 @@ class Collection(Generic[T]):
         Returns:
             Collection of pairs zipped from each input Collection.
         """
-        return []
+        result = cls()
+        for left, right in zip(l1, l2):
+            result.add((left, right))
+        return result
 
     def pset(_self) -> set[set[T]]:
         """
