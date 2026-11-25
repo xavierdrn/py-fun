@@ -4,3 +4,5 @@
 # viewed as 'exports' of this package.
 
 from .main import main
+from .expressions import Expressions, main
+from .recursions import Recursion, main

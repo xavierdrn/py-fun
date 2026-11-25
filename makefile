@@ -22,7 +22,7 @@ $(BUILD): tests $(DOCS_BUILD)
 
 # run tests
 tests: .PHONY
-	python -m unittest -v tests
+	pytest -v
 
 # build docs
 $(DOCS_BUILD):

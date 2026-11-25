@@ -1,0 +1,79 @@
+from typing import Self
+
+
+class Expressions:
+    """
+    Class that holds slots for one-line expressions initialized
+    in the constructor.
+
+    Use Python built-in functions, list expressions and comprehension,
+    but NOT own functions.
+
+    Complete tasks one after another. Once you are done with one task,
+    add the test until the full set of tests.
+
+    See tests/expressions/test_expressions.py how to incrementally run tests.
+    """
+
+    default_numbers=[4, 12, 3, 8, 17, 12, 1, 8, 7]
+
+    def __init__(self, _numbers=default_numbers):
+        """
+        Constructor to initialize member variables.
+        """
+        self.numbers = _numbers
+
+        # a) initialize with number of numbers: 9
+        self.a = len(self.numbers)    # <-- given solution, insert one-line expressions below
+
+        # b) initialize with first three numbers: [4, 12, 3]
+        self.b = self.numbers[:3]
+
+        # c) initialize with last three numbers: [1, 8, 7]
+        self.c = self.numbers[-3:]
+
+        # d) initialize with last three numbers reverse: [7, 8, 1]
+        self.d = self.numbers[-3:][::-1]
+
+        # e) initialize with odd numbers: [3, 17, 1, 7]
+        self.e = [n for n in self.numbers if n % 2 == 1]
+
+        # f) initialize with number of odd numbers: 4
+        self.f = sum(1 for n in self.numbers if n % 2 == 1)
+
+        # g) initialize with sum_ of odd numbers: 28
+        self.g = sum(n for n in self.numbers if n % 2 == 1)
+
+        # h) duplicate numbers removed: [4, 12, 3, 8, 17, 1, 7]
+        self.h = list(dict.fromkeys(self.numbers))
+
+        # i) number of duplicate numbers: 2
+        self.i = len(self.numbers) - len(set(self.numbers))
+
+        # j) ascending list of squared numbers with no duplicates: [1, 9, 16, 49, 64, 144, 289]
+        self.j = sorted({n * n for n in self.numbers})
+
+        # k) initialize with "ODD_LIST", "EVEN_LIST" or "EMPTY_LIST" depending on numbers length
+        self.k = "EMPTY_LIST" if not self.numbers else "ODD_LIST" if len(self.numbers) % 2 else "EVEN_LIST"
+
+    def print_results(self) -> Self:
+        print(f'\nnumbers: {self.numbers}\n#')
+        fmt = {
+            # key: (value, output string)
+            'a': (self.a, 'number of numbers'),
+            'b': (self.b, 'first three numbers'),
+            'c': (self.c, 'last three numbers'),
+            'd': (self.d, 'last three numbers reverse'),
+            'e': (self.e, 'odd numbers'),
+            'f': (self.f, 'number of odd numbers'),
+            'g': (self.g, 'sum of odd numbers'),
+            'h': (self.h, 'duplicate numbers removed'),
+            'i': (self.i, 'number of duplicate numbers'),
+            'j': (self.j, 'ascending, de-dup (n^2) numbers'),
+            'k': (self.k, 'length'),
+        }
+        # format output, e.g.: "b) first three numbers: [1, 4, 6]"
+        for k in sorted(fmt.keys()):
+            print(f'{k}) {fmt[k][1]}: {fmt[k][0]}')
+        # 
+        return self
